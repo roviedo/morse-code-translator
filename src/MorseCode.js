@@ -38,10 +38,17 @@ class MorseCode extends Component {
     }
 
     handleChange = (e) => {
-        if (morseCodeDict[e.target.value]) {
+        const morseCodeArr = e.target.value.split(' ');
+        let morseCode = '';
+        for (let i = 0; i<morseCodeArr.length; i++) {
+            if (morseCodeDict[morseCodeArr[i]]) {
+                morseCode += ` ${morseCodeDict[morseCodeArr[i]]}`
+            }
+        }
+        if (morseCode.length > 0) {
             this.setState({
                 showMorseCode: true,
-                morseCode: morseCodeDict[e.target.value]
+                morseCode
             });
         }
         this.setState({
