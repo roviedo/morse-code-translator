@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 const morseCodeDict = {
+    '': '',
     '.-': 'a',
     '-...': 'b',
     '-.-.': 'c',
@@ -26,7 +27,17 @@ const morseCodeDict = {
     '.--': 'w',
     '.--': 'x',
     '-.--': 'y',
-    '--..': 'z'
+    '--..': 'z',
+    '-----': '0',
+    '.----': '1',
+    '..---': '2',
+    '...--': '3',
+    '....-': '4',
+    '.....': '5',
+    '-....': '6',
+    '--...': '7',
+    '---..': '8',
+    '----.': '9'
 }
 
 class MorseCode extends Component {
@@ -42,17 +53,17 @@ class MorseCode extends Component {
         let morseCode = '';
         for (let i = 0; i<morseCodeArr.length; i++) {
             if (morseCodeDict[morseCodeArr[i]]) {
-                morseCode += ` ${morseCodeDict[morseCodeArr[i]]}`
+                morseCode += `${morseCodeDict[morseCodeArr[i]]}`
             }
         }
         if (morseCode.length > 0) {
             this.setState({
-                showMorseCode: true,
-                morseCode
+                showMorseCode: true
             });
         }
         this.setState({
-            userMorseCodeInput: e.target.value
+            userMorseCodeInput: e.target.value,
+            morseCode
         });
     }
 
