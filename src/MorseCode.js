@@ -38,7 +38,12 @@ class MorseCode extends Component {
     }
 
     handleChange = (e) => {
-        console.log('userMorseCodeInput', e);
+        if (morseCodeDict[e.target.value]) {
+            this.setState({
+                showMorseCode: true,
+                morseCode: morseCodeDict[e.target.value]
+            });
+        }
         this.setState({
             userMorseCodeInput: e.target.value
         });
@@ -48,6 +53,7 @@ class MorseCode extends Component {
         return (
             <div>
                 <input type="text" value={this.state.userMorseCodeInput} onChange={this.handleChange} />
+                { this.state.showMorseCode ? <div>{this.state.morseCode}</div> : null }
             </div>
         );
     }
