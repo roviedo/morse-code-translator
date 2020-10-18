@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import dot from './dot.wav';
+import dash from './dash.wav';
 
 const morseCodeDict = {
     '': '',
@@ -9,10 +11,10 @@ const morseCodeDict = {
     '.': 'e',
     '..-.': 'f',
     '--.': 'g',
-    '.....': 'h',
+    '....': 'h',
     '..': 'i',
     '.---': 'j',
-    '-.-.': 'k',
+    '-.-': 'k',
     '.-..': 'l',
     '--': 'm',
     '-.': 'n',
@@ -25,7 +27,7 @@ const morseCodeDict = {
     '..-': 'u',
     '...-': 'v',
     '.--': 'w',
-    '.--': 'x',
+    '-..-': 'x',
     '-.--': 'y',
     '--..': 'z',
     '-----': '0',
@@ -67,11 +69,40 @@ class MorseCode extends Component {
         });
     }
 
+    handlePlay = () => {
+        const morseCodeArr = this.state.userMorseCodeInput.split('');
+
+        let audioArrayList = [];
+        for (let i = 0; i<morseCodeArr.length; i++) {
+            if (morseCodeArr[i] === '.') {
+                audioArrayList.push(dot);
+            } else if (morseCodeArr[i] === '-') {
+                audioArrayList.push(dash);
+            }
+        }
+
+        const audio = new Audio(audioArrayList[0]);
+        audio.src=audioArrayList[0];
+        audio.play();
+        let index = 0;
+        audio.onended = function() {
+            if(index < audioArrayList.length){
+                audio.src=audioArrayList[index+1];
+                audio.play();
+                index++;
+            }
+        };
+    }
+
     render () {
         return (
             <div>
+                <h1>Morse code translator</h1>
                 <input type="text" value={this.state.userMorseCodeInput} onChange={this.handleChange} />
                 { this.state.showMorseCode ? <div>{this.state.morseCode}</div> : null }
+                <input type="button" onClick={this.handlePlay} value="Play" disabled={!this.state.showMorseCode}/>
+                <audio className="dash" src="./dash.wav" type="audio/wav" preload="true" />
+                <audio className="dot" src="./dot.wav" type="audio/wav" preload="true" />
             </div>
         );
     }
